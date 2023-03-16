@@ -1,0 +1,22 @@
+.card-item {
+  width: 250px;
+  background-color: #ffffff;
+  border: 5px;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  border-radius: 15px;
+  margin: 5px;
+}
+.app-icon {
+  width: 80px;
+}
+.app-name {
+  font-family: 'Bree Serif';
+  font-size: 20px;
+  color: #1e293b;
+  margin-bottom: 0;
+}
