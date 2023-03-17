@@ -305,15 +305,29 @@ class AppStore extends Component {
     this.setState({searchInput: event.target.value})
   }
 
-  render() {
-    const {activeTab, searchInput} = this.state
+  getSeletedAppList = () => {
+    const {activeTab} = this.state
+
     const selectedTabAppList = appsList.filter(
       eachObj => eachObj.category === activeTab,
     )
 
+    return selectedTabAppList
+  }
+
+  getSearchInputBasedList = selectedTabAppList => {
+    const {searchInput} = this.state
     const filteredAppList = selectedTabAppList.filter(eachObj =>
       eachObj.appName.toLowerCase().includes(searchInput),
     )
+    return filteredAppList
+  }
+
+  render() {
+    const {activeTab} = this.state
+    const selectedTabAppList = this.getSeletedAppList()
+
+    const filteredAppList = this.getSearchInputBasedList(selectedTabAppList)
 
     console.log(selectedTabAppList)
     console.log(filteredAppList)
@@ -326,6 +340,7 @@ class AppStore extends Component {
               onChange={this.onSearchDisplayItems}
               className="search-element"
               type="search"
+              placeholder="Search"
             />
             <img
               className="search-icon"
