@@ -295,13 +295,38 @@ const appsList = [
 ]
 
 class AppStore extends Component {
+  state = {activeTab: tabsList[0].tabId, searchInput: ''}
+
+  onClickTabItem = tabId => {
+    this.setState({activeTab: tabId})
+  }
+
+  onSearchDisplayItems = event => {
+    this.setState({searchInput: event.target.value})
+  }
+
   render() {
+    const {activeTab, searchInput} = this.state
+    const selectedTabAppList = appsList.filter(
+      eachObj => eachObj.category === activeTab,
+    )
+
+    const filteredAppList = selectedTabAppList.filter(eachObj =>
+      eachObj.appName.toLowerCase().includes(searchInput),
+    )
+
+    console.log(selectedTabAppList)
+    console.log(filteredAppList)
     return (
       <div className="app-container">
         <div className="content-container">
           <h1 className="heading">App Store</h1>
           <div className="search-box-container">
-            <input className="search-element" type="search" />
+            <input
+              onChange={this.onSearchDisplayItems}
+              className="search-element"
+              type="search"
+            />
             <img
               className="search-icon"
               alt="search icon"
@@ -310,14 +335,18 @@ class AppStore extends Component {
           </div>
           <ul className="tabs-container">
             {tabsList.map(eachObj => (
-              <TabItem key={eachObj.tabId} tabsList={eachObj} />
+              <TabItem
+                isActive={eachObj.tabId === activeTab}
+                onClickTabItem={this.onClickTabItem}
+                key={eachObj.tabId}
+                tabsList={eachObj}
+              />
             ))}
           </ul>
           <ul className="apps-item-container">
-            {appsList.map(eachObj => (
+            {filteredAppList.map(eachObj => (
               <AppItem key={eachObj.appId} appsList={eachObj} />
             ))}
-            <AppItem appsList={appsList[0]} />
           </ul>
         </div>
       </div>
